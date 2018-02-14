@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Shop-floor dashboard</title>
+		<link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" />
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<!-- <script src="js/jquery-1.6.2.min.js"></script> -->
+		<script src="js/jquery-ui-1.8.16.custom.min.js"></script>
+		<link href="css/style.css" rel="stylesheet" type="text/css" >
+		<script type="text/javascript" src="js/ui.js"></script>
+		<script>
+			$(document).ready(function () {
+				$('#dialog_window_1').dialog({
+					width: 'auto',
+					height: 'auto',
+					autoOpen: false,
+					buttons: [{
+						text: 'Create',
+						click: createWindow
+					}]
+				});
+				$('#buttonlist').buttonset();
+			});
+			var createWindow = function (visualizer) {
+							var div_count = $('.dialog_window').length + 1;
+							var div_id = 'dialog_window_' + div_count;
+							var div_title = visualizer.title + "  (" + (div_count - 1) + ")";
+							var div_content = create_iframe(div_id,visualizer.url);
+							var buttons = new Array();
+							$('body').append('<div class="dialog_window" id="' + div_id + '">' + div_content + '</div>');
+							dashboard.windows.push(div_id);
+							var dialog = $('#' + div_id).dialog({
+								width: 500,
+								height: 500,
+								title: div_title,
+								autoOpen: true,
+								buttons: buttons
+							});
+						}
+			var resize = function() {
+				//console.log(dashboard.windows);
+				dashboard.windows.forEach(function(el){
+					var iframe = document.getElementById(el+'_iframe');
+					var window =  document.getElementById(el);
+
+					//console.log("style width", window.style.width)//;.split(";")[0].split(":")[1]).substring(1,this.length);
+					var width = document.getElementById(el).width || document.getElementById(el).style.width || 500;
+					var height = document.getElementById(el).height || document.getElementById(el).style.height|| 500;
+
+					
+					document.getElementById(el+'_iframe').width =  width;
+					document.getElementById(el+'_iframe').height =  height;
+					//currentRow.setAttribute("style","background:" + "#039BE5")
+				});
+			};
+			//129.13.169.143
+			var base_url = "http://0.0.0.0";	
+			//var base = "http://129.13.169.143";
+			//var base = "http://129.13.7.131";
+			// var base = "http://129.13.169.157";
+			// var base_url = base;//+ ":5900";
+			
+			var dashboard = {
+				windows:[],
+				graph_visualizer : {
+					title:"Graph Visualizer",
+					url:  base_url + ":8060" + "/GraphView.html"
+				},
+				table_visualizer : {
+					title:"List View",
+					url: base_url +":8050" + "/ListView.html"
+				},
+				tree_visualizer : {
+					title:"Tree Visualizer",
+					url:  base_url +":8070" + "/TreeView.html"
+				},
+				model_visualizer : {
+					title: "3D Model visualizer",
+					url:  base_url +":8070" + "/websockets/build02/index.html"
+				}, note_app : {
+					title:"Note App",
+					url:base_url +":8070/websockets/notePad.html"
+				}
+			};
+			var create_iframe = function(div_id,url) { return "<iframe  id="+div_id+'_iframe src='+url+" height=auto width=auto> >"+
+                    "alternative content for browsers which do not support iframe."+
+                    "</iframe>";} //</div>"; }
+		window.onmousemove = function()
+		{
+				resize();
+		}
+		</script>
+		<script src="js/nav.js" type="text/javascript"></script>
+	</head>
+	<body>
+			<div id="mySidenav" class="sidenav">
+					<!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
+					<a href="#" ><img id="scaleit_logo" src="./images/scaleit_logo_small.png" alt="ScaleIT" width="55" style="border-radius: 50%;" /></a>
+					<a href="#" onclick="createWindow(dashboard.graph_visualizer);">Graph</a>
+					<a href="#" onclick="createWindow(dashboard.table_visualizer);">List</a>
+					<a href="#" onclick="createWindow(dashboard.model_visualizer);">3D</a>
+					<a href="#" onclick="createWindow(dashboard.tree_visualizer);">Tree</a>
+					<a href="#" onclick="createWindow(dashboard.note_app);">Notes</a>
+					<!-- <a href="https://docs.google.com/forms/d/1fXndSmfncZFKb3CNB7va_EQZ_0X5QEkcONPrw5tFY90"> Studie</a> -->
+				  </div>
+				  <div class="content"> 
+				  <!-- Use any element to open the sidenav -->
+				  <span onclick="openNav()" style="display:none";>open</span>
+		<div id="dialog_window_minimized_container"></div>
+	</div>
+<div id="images" style="display: none"></div>
+<!-- <script src="http://192.168.0.234:5900/websockets/js/frontend.js"></script> -->
+<!-- <script src="http://129.13.169.157:5900/websockets/js/frontend.js"></script> -->
+<!-- <script src="http://0.0.0.0:5900/websockets/js/html2canvas.js" type="text/javascript"></script> -->
+<!-- <script src="http://0.0.0.0:5900/websockets/js/screenshot.js" type="text/javascript"></script>	   -->
+</body>
+</html>

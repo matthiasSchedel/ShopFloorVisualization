@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Evaluation Design</title>
+
+	<meta charset="utf-8"/>
+  <style type="text/css">
+html {
+    /* the line height value of 1.9 is fixed for a line height multiple of 1.4 in the text view */
+    font: normal 93.8%/1.9 serif;
+}
+
+body {
+    font-family: 'Menlo', Helvetica, Georgia, serif;
+    word-wrap: break-word;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    overflow:hidden;
+    background-color: #f2f2f2;
+    color: #3c3c3c;
+}
+
+/**
+ *
+    Wrappers
+ *
+ */
+
+#wrapper {
+    position: fixed;
+    width: 99.9%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 1.0em;
+}
+
+#wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+    -webkit-transition: all .45s ease-in;
+    position: relative;
+}
+#wrapper::-webkit-scrollbar-button:start:decrement, #wrapper::-webkit-scrollbar-button:end:increment {
+    height: 0px;
+    display: block;
+    background-color: transparent;
+}
+#wrapper::-webkit-scrollbar-track-piece {
+    background-color:
+    transparent;
+    -webkit-border-radius: 6px;
+}
+#wrapper::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background-color: #c8c8c8;
+    -webkit-border-radius: 6px;
+    -webkit-transition: all .45s ease-in;
+}
+
+#content {
+    width: 610px;
+    margin: 0 auto 0 auto;
+    padding: 30px 0 30px 0;
+}
+
+/**
+ *
+    Headings
+ *
+ */
+
+h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+    line-height: 1;
+    margin: 0.5rem 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+    line-height: 1;
+    margin: 0.5rem 0;
+}
+
+h1, 
+h2, 
+h3 { margin-bottom: 1rem; }
+
+h1 { font-size: 2.75rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.00rem; }
+h6 { font-size: 0.85rem; }
+
+/**
+ *
+	Paragraphs
+ *
+ */
+
+p {
+	margin: 0 0 1.5em;
+}
+
+/**
+ *
+    Block quotes
+ *
+ */
+
+blockquote {
+    margin: 0 0 1.5em;
+    width: 96%;
+    padding: 0 10px;
+    border-left: 3px solid #ddd;
+    color: #777;
+}
+
+/**
+ *
+	Code Blocks
+ *
+ */
+
+pre code {
+	word-wrap: normal;
+	white-space: pre-wrap;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    -webkit-border-radius: 0;
+}
+
+pre {
+	white-space: pre-wrap;
+    width: 96%;
+    margin-bottom: 24px;
+    overflow: hidden;
+    padding: 3px 10px;
+    -webkit-border-radius: 3px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+}
+
+code {
+	white-space: nowrap;
+	font-family: monospace;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+}
+
+small {
+	font-size: 65%;
+}
+
+/**
+ *
+    Dictionary Definition
+ *
+ */
+
+dt {
+	display: inline;
+    font-weight:bold;
+}
+
+dd {
+	display: block;
+}
+
+/**
+ *
+    Anchors
+ *
+ */
+
+a {
+    color: #308bd8;
+    text-decoration:none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/**
+ *
+    Horizontal rules
+ *
+ */
+
+hr {
+    width: 100%;
+    margin: 3em auto;
+    border: 0;
+    color: #eee;
+    background-color: #ccc;
+    height: 1px;
+    -webkit-box-shadow:0px 1px 0px rgba(255, 255, 255, 0.75);
+}
+
+/**
+ *
+    Lists
+ *
+ */
+
+ol, ul {
+    list-style-position: outside;
+    padding-left: 0;
+    margin-left: 1.5em;
+}
+
+ol li, ul li {
+    text-align: -webkit-match-parent;
+}
+
+li p {
+    margin: 0.5em 0 0.5em;
+}
+
+ol ol, ol ul, ul ul, ul ol {
+    padding-left: 1.5em;
+}
+
+/**
+ *
+    Tables
+ *
+ */
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-spacing: 0;
+}
+
+table th {
+    padding: 3px 10px;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+table tr {
+}
+
+table td {
+    padding: 3px 10px;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+/**
+ *
+    Images
+ *
+ */
+
+img {
+    border: none;
+    display: block;
+    margin: 1em auto;
+    max-width: 100%;
+}
+
+/**
+ *
+    Marks
+ *
+ */
+
+mark {
+    background: #fefec0;
+    padding:1px 3px;
+}
+
+/**
+ *
+    Footnotes
+ *
+ */
+.footnote {
+    font-size: 0.8rem;
+    vertical-align: super;
+}
+.footnotes ol {
+    font-weight: bold;
+}
+.footnotes ol li {
+    text-align: -webkit-match-parent;
+}
+
+.footnotes ol li p {
+    font-weight: normal;
+}
+
+/**
+ *
+    Figures and Captions
+ *
+ */
+caption {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+figure {
+    display: block;
+    text-align: center;
+}
+
+figcaption {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+/**
+ *
+    Custom classes
+ *
+ */
+
+.shadow {
+    -webkit-box-shadow: 0 2px 4px #999;
+}
+
+.source {
+    text-align: center;
+    font-size: 0.8em;
+    color: #777;
+    margin: -40px auto;
+}
+#wrapper {
+    width: 99.9%;
+}
+#content {
+    width: 610px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mobile support */
+@media only screen and (max-device-width:1024px) {
+    html {
+        overflow: auto;
+    }
+
+    #wrapper {
+        overflow: auto;
+        position: relative;
+    }
+}/* html elements */
+
+body {
+    background-color: #1a1a1a;
+    color: #bebebe;
+}
+a {
+    color: #308bd8;
+}
+hr {
+    color: #666;
+    background-color: #666;
+    -webkit-box-shadow: none;
+}
+pre {
+    background-color: #222;
+    border-color: #3c3c3c;
+}
+code {
+    background-color: #222;
+    border-color: #3c3c3c;
+}
+blockquote {
+    border-color: #333;
+    color: #999;
+}
+table {
+    border-color: #3c3c3c;
+}
+table th {
+    background-color: #222;
+    border-color: #3c3c3c;
+}
+table td {
+    border-color: #3c3c3c;
+}
+mark {
+    background: #bc990b;
+    color:#000;
+}
+
+/* unique elements */
+
+#wrapper::-webkit-scrollbar-thumb:vertical {
+    background-color: #525252;
+}
+#top-fader {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(26,26,26,1)), to(rgba(26,26,26,0)));
+}
+#bottom-fader {
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(26,26,26,1)), to(rgba(26,26,26,0)));
+}
+
+/* custom formatting classes */
+
+.shadow {
+    -webkit-box-shadow: 0 2px 4px #000;
+}@media print {
+/* Printing support.
+ * Override all printing colors to match the Light theme.
+ */
+img, pre, blockquote, table, figure {
+    page-break-inside: avoid;
+}
+body {
+    background-color:#fff;
+}
+#wrapper {
+    position: static;
+    overflow: hidden;
+    color: #000;
+    width: 100%;
+    margin: 0 auto;
+}
+.footnotes {
+    page-break-before: always;
+}
+#content {
+    margin: 0 auto;
+    padding: 0;
+    width: 98%;
+}
+#top-fader, #bottom-fader {
+    display: none;
+}
+hr {
+    color:#ddd;
+    background-color:#ddd;
+    -webkit-box-shadow:0px 1px 0px #ddd;
+}
+pre {
+    background-color:transparent;
+    border: 1px solid #ddd;
+}
+code {
+    background-color:transparent;
+    border: 1px solid #ddd;
+}
+blockquote {
+    border-left: 3px solid #ddd;
+    color: #000;
+}
+ol {
+    /*
+     * Override the list style when printing to ensure list
+     * markers won't get cut.
+     */
+    list-style-position: inside;
+    padding-left: 0;
+    margin-left: 0;
+}
+table {
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+table th {
+    background-color:transparent;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+table td {
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+mark {
+    background:transparent;
+    color: #000;
+}
+.source {
+    color: #000;
+}
+}
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="content">
+<h1 id="linkeddatagraph-shopfloorscenario">Linked Data Graph - Shopfloor Scenario</h1>
+
+<figure>
+<img src="file:///Users/matthiasschedel/Desktop/shopfloor.jpg" alt="Shopfloor 3D Visualization" />
+<figcaption>Shopfloor 3D Visualization</figcaption>
+</figure>
+
+<h3 id="scenario-challengesoftheshop-floor">Scenario - challenges of the shop-floor</h3>
+
+<p>On this shop-floor, printed circuit boards (PCB) are soldered and baked, every PCB consists of a board with 8 chip components (capacitors, transistors, resistors). After every production step sensors observe the board and its components to ensure everythiny is working properly and to detect if a machine starts to produce errors. Each production line (<span style="color:blue"><em>blue</em></span>) consist of several machines (<span style="color:grey"><em>grey</em></span>), sensors (<span style="color:red"><em>red</em></span>) and products (light grey) with components each (<span style="color:yellow"><em>yellow</em></span>).</p>
+
+<p>Video of PCB production:</p>
+
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/XQ73U7tU28A" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></p>
+
+<h3 id="productionlinesmachinesandsensors">Production lines, machines and sensors</h3>
+
+<p>The shopfloor is divided in different production lines. Along each line, sensor and machines are placed. Sensors record information about product at different positions in the production line</p>
+
+<h3 id="productsandproductcomponents">Products and Product components</h3>
+
+<p>Each product(PCB) consists of a board with 8 chip components (capacitors, transistors, resistors). </p>
+
+<h3 id="sensordataandsensordatavalues">Sensordata and sensordata values</h3>
+
+<p>Each record of a product is represented as sensordata - it contains general information about a sensor record like errorcodes or temperature of the board. Each sensordata also has 8 sensordata_value representing sensor record information about single board components. </p>
+
+<h3 id="youareashop-flooroperator">You are a shop-floor operator</h3>
+
+<p>You work on the shop-floor and have the responsibility of delivering the highest quality pcbs. This is achieved through monitoring the production and identifying error sources, which then can then be fixed by your staff. </p>
+
+<h3 id="yourtasks">Your Tasks</h3>
+
+<p>You have to perform 3 different task to help the shop-floor manager solve erros occuring during production on the shop-floor. He needs specific information about the currently ocurring erros in his production lines. You have to find information about the errors and information about other effects that happen on the shop-floor to understand the connection between changes applied to different stages of the production process in an assembly line. </p>
+
+<p>The particular tasks are the following:</p>
+
+<pre><code>1. Warm Up Task: How many sensorddata instances (sensor_records) existe of the product with the id 104
+2. Find the machine with that processed the most error-free products (error-code = 0).
+2. Find the machine that processed the most error products
+</code></pre>
+
+<p>Write your results in the note app (see description of Note App below)</p>
+
+<h3 id="yourtools">Your Tools</h3>
+
+<p>To solve this tasks the shop-floor manager provides you different apps that are specialized to work with shop-floor data.
+For each task you have to use a specific combination of them to achieve the desired result.</p>
+
+<p>The apps are:</p>
+
+<h4 id="1.thegraphvisualizer:">1. The Graph Visualizer:</h4>
+
+<p>The Graph Visualier displays an undirected graph, representing all instances of the shop-floor as nodes and their relationships as links. It is possible to hide node and link labels but also specific entity types to allow focusing only on the relevant entities. </p>
+
+<figure>
+<img src="GraphView.jpg" alt="Graph Visualizer" />
+<figcaption>Graph Visualizer</figcaption>
+</figure>
+
+<h4 id="2.thetreevisualizer:">2. The Tree Visualizer:</h4>
+
+<p>The tree view displays detailed information about a specific entity on the shop-floor like the error_codes of a sensordata_value.</p>
+
+<figure>
+<img src="TreeView.jpg" alt="Tree Visualizer" />
+<figcaption>Tree Visualizer</figcaption>
+</figure>
+
+<h4 id="3.thelistview:">3. The List View:</h4>
+
+<p>The list visualizer provides searchable lists of all entities. Each entity is represented as a row.</p>
+
+<figure>
+<img src="list_view.jpg" alt="List View" />
+<figcaption>List View</figcaption>
+</figure>
+
+<h4 id="4.thenoteview:">4. The Note View:</h4>
+
+<p>Use the Note View to record the solution of every task. You can use the Copy-selected-to-Clipboard-Button (+ Pressing ctrl-C and enter) to copy the currently selected app to the clipboard to easily paste it in your results.</p>
+
+<figure>
+<img src="note_app.jpg" alt="Note View" />
+<figcaption>Note View</figcaption>
+</figure>
+
+<h4 id="5.the3dmodelvisualizer:notusedduringthisscenario">5. The 3d model visualizer: (not used during this scenario)</h4>
+
+<p>The 3d model visualizer shows a three dimensional representation of the shop-floor and all its physical(!) entities. The user can navigate along the production lines and examine single entities by clicking on them.</p>
+
+<figure>
+<img src="file:///Users/matthiasschedel/Desktop/shopfloor.jpg" alt="3D Model Visualizer" />
+<figcaption>3D Model Visualizer</figcaption>
+</figure>
+
+<h4 id="combiningtools:">Combining tools:</h4>
+
+<p>Each selection of an entitiy in one app sends a message to all the other apps and allows them to act accordingly. For example if the list and the 3d model visualizer is opened - clicking on a product in the list will select the product in the 3d model and centers the camera on it if Interaction is toggled in the app.
+To toggle interaction press the grey slider:</p>
+
+<ul>
+<li>Toggle Interaction turned off:</li>
+</ul>
+
+<figure>
+<img src="toggle_off.jpg" alt="Toggle Off" />
+<figcaption>Toggle Off</figcaption>
+</figure>
+
+<ul>
+<li>Toggle Interaction turned on:</li>
+</ul>
+
+<figure>
+<img src="toggle_on.jpg" alt="Toggle On" />
+<figcaption>Toggle On</figcaption>
+</figure>
+
+<h3 id="exampleworkflowforlookingupproductcomponentsidsofproductwithid1012">Example workflow for looking up product components ids of product with id 1012</h3>
+
+<ol>
+<li>Open a ListView app</li>
+</ol>
+
+<figure>
+<img src="step1.jpg" alt="Open a ListView app:" />
+<figcaption>Open a ListView app:</figcaption>
+</figure>
+
+<ol>
+<li>Select filter by id and type the id 1012 in the search box</li>
+</ol>
+
+<figure>
+<img src="step2.jpg" alt="Select filter by id and type the id 1012 in the search box:" />
+<figcaption>Select filter by id and type the id 1012 in the search box:</figcaption>
+</figure>
+
+<ol>
+<li>Open a second Listview app instance and slide the toggle interaction slider</li>
+</ol>
+
+<figure>
+<img src="step3.jpg" alt="Open a second Listview app instance and slide the toggle interaction slider:" />
+<figcaption>Open a second Listview app instance and slide the toggle interaction slider:</figcaption>
+</figure>
+
+<ol>
+<li>With a click on the search result in the first Listview instance you now get all needed product components listed</li>
+</ol>
+
+<figure>
+<img src="step4.jpg" alt="With a click on the search result in the first Listview instance you now get all needed product components listed:" />
+<figcaption>With a click on the search result in the first Listview instance you now get all needed product components listed:</figcaption>
+</figure>
+
+<!--![First Step:](step5.jpg)-->
+
+<ol>
+<li>To start the tasks <a href="http://0.0.0.0:5900/websockets/demo/index.html#">Click this link to open the tool dashboard</a></li>
+<li>After your done with all tasks Click <a href="https://docs.google.com/forms/d/1fXndSmfncZFKb3CNB7va_EQZ_0X5QEkcONPrw5tFY90">here</a> to start the questionare</li>
+</ol>
+
+<hr />
+
+<p>This is not included in the task:</p>
+
+<h3 id="exampleshopfloorsparqlquery">Example shopfloor SPARQL Query</h3>
+
+<p>PREFIX shopfloor:
+<a href="http://scale-it.org/shopfloor#">http://scale-it.org/shopfloor#</a></p>
+
+<p>SELECT ?sensor ?product WHERE {
+ {
+ ?sensor a shopfloor:machine.
+ ?sensor shopfloor:id &#8216;101&#8217;.
+ ?sensor shopfloor:version ?sensor_version .
+ ?product shopfloor:produced_by ?sensor
+ } </p>
+
+<p>}</p>
+
+<p><a href="http://0.0.0.0:3030/dataset.html?tab=query&amp;ds=/shopfloor">Click here to open the query interface</a></p>
+
+<p><a href="http://0.0.0.0:3030/dataset.html?tab=query&amp;ds=/shopfloor">Click this link to open the SPARQL query interface</a></p>
+
+<h3 id="questionare">Questionare</h3>
+
+<ul>
+<li>Click <a href="https://docs.google.com/forms/d/1fXndSmfncZFKb3CNB7va_EQZ_0X5QEkcONPrw5tFY90">here</a> to start the questionare</li>
+</ul>
+    </div>
+  </div> <!-- End wrapper -->
+</body>
+</html>

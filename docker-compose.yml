@@ -1,0 +1,71 @@
+version: "3.2"
+services:
+  graph_view:
+    build: ./graph_view
+    labels:
+    - "com.example.description=The tree visualizer"
+    - "com.example.name=graph_view" 
+    ports:
+    - "8060:80"
+    volumes: 
+    - ./graph_view/public-html:/usr/local/apache2/htdocs/
+    - ./graph_view/logs:/usr/local/apache2/logs   
+  dashboard:
+  list_view:
+    build: ./list_view
+    labels:
+    - "com.example.description=The tree visualizer"
+    - "com.example.name=list_view" 
+    ports:
+    - "8050:80"
+    volumes: 
+    - ./list_view/public-html:/usr/local/apache2/htdocs/
+    - ./list_view/logs:/usr/local/apache2/logs   
+  tree_view:
+    build: ./tree_view
+    labels:
+    - "com.example.description=The tree visualizer"
+    - "com.example.name=tree_view" 
+    ports:
+    - "8070:80"
+    volumes: 
+    - ./tree_view/public-html:/usr/local/apache2/htdocs/
+    - ./tree_view/logs:/usr/local/apache2/logs   
+  dashboard:
+    build: ./dashboard
+    labels:
+    - "com.example.description=The dashboard"
+    - "com.example.name=Dashboard" 
+    ports:
+    - "8010:80"
+    volumes: 
+    - ./dashboard/public-html:/usr/local/apache2/htdocs/
+    - ./dashboard/logs:/usr/local/apache2/logs
+  context_server:
+    ports:
+    - "1337:1337"
+    build: ./context_server
+    volumes:
+    - ./context_server/app:/app
+  fuseki:
+    labels:
+    - "com.example.description=A fuseki container"
+    - "com.example.name=Fuseki"
+    image: stain/jena-fuseki
+    ports:
+    - "3030:3030" 
+    volumes:
+    - ./fuseki:/fuseki/
+      #   - type: volume
+      #     source: fuseki
+      #     target: /fuseki
+      #     volume:
+      #      nocopy: true
+      #   - type: bind
+      #     source: ./fuseki
+      #     target: ./fuseki/
+      #  - ./fuseki:./fuseki/
+    environment:
+    - ADMIN_PASSWORD=pw123
+
+

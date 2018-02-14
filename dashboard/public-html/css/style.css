@@ -1,0 +1,114 @@
+.dialog_form th {
+  text-align: left;
+}
+
+
+.dialog_form textarea,
+.dialog_form input[type="text"] {
+  width: 320px;
+}
+
+#dialog_window_minimized_container {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+}
+
+.dialog_window_minimized {
+  float: left;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 2px;
+  display: none;
+}
+
+.dialog_window_minimized .ui-icon {
+  display: inline-block !important;
+  position: relative;
+  top: 3px;
+  cursor: pointer;
+}
+
+.ui-dialog .ui-dialog-titlebar-minimize {
+  height: 18px;
+  width: 19px;
+  padding: 1px;
+  position: absolute;
+  right: 23px;
+  top: 9px;
+}
+
+.ui-dialog .ui-dialog-titlebar-minimize .ui-icon {
+  display: block;
+  margin: 1px;
+}
+
+.ui-dialog .ui-dialog-titlebar-minimize:hover,
+.ui-dialog .ui-dialog-titlebar-minimize:focus {
+  padding: 0;
+}
+div.sidebar {
+  display: block;
+  width: 80px;
+  height: 100%;
+  margin-left: 0;
+  background: grey;
+}
+/* The side navigation menu */
+/* The sidenav */
+.sidenav {
+  height: 100%;
+  width: 100px;
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  margin-left:-24px;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover,
+.offcanvas a:focus {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Page content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+div.content {
+  margin-left: 60px;
+}
