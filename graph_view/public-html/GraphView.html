@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    .link {
+    stroke: #000;
+    stroke-width: 0.5px;
+    }
+    .node {
+    cursor: move;
+    fill: #ccc;
+    stroke: #000;
+    stroke-width: 1.0px;
+    }
+
+    .node.fixed {
+    fill: #f00;
+    stroke-width: 3.0px;
+    }
+    /* The switch - the box around the slider */
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {display:none;}
+
+    /* The slider */
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    input:checked + .slider {
+    background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 34px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
+    } 
+</style>
+<body>
+        <div style=" z-index: 999;position: fixed; top:0px; right:50%;">
+            <div id="settings" style="display:none;">
+                <span id="node_info">
+                    Name:
+                    <label id='node_name'></label>
+                    Typ:
+                    <label id='node_type'></label>
+                </span>
+                <div style="display:none;" class="form-group" id="node_checked">
+                    <label id="show_label_sensor">Sensors </label>
+                        <input class="form-control" name="checkbox" id="show_sensor" type="checkbox" checked="checked"> 
+                    <label id="show_label_production_line">| Production lines  </label>
+                        <input class="form-control" name="checkbox" id="show_production_line" type="checkbox" checked="checked"> 
+                    <label id="show_label_machine">| Machines </label>
+                        <input class="form-control" name="checkbox" id="show_machine" type="checkbox" checked="checked"> 
+                    <label id="show_label_product">| Products </label>
+                        <input class="form-control" name="checkbox" id="show_product" type="checkbox" checked="checked"> 
+                    <label id="show_label_sensordata" type="checkbox">| SensorData </label>
+                        <input class="form-control" name="checkbox" id="show_sensordata" type="checkbox" checked="checked"> 
+                    <label id="show_label_sensordata_value" type="checkbox">Show: Sensordata value  </label> 
+                        <input class="form-control" name="checkbox" id="show_sensordata_value" type="checkbox" checked="checked">
+                        <!--  <label id="show_sensor_meta_data"> Show: Sensors meta_data
+                   <input class="form-control" name="checkbox" id="show_sensor_meta_data" type="checkbox" checked="checked"> | Machines meta_data </label>
+                    <input class="form-control" name="checkbox" id="show_machine_meta_data" type="checkbox" checked="checked"> | Products meta_data
+                    <input class="form-control" name="checkbox" id="show_product_meta_data" type="checkbox" checked="checked"> | SensorData meta_data
+                    <input class="form-control" name="checkbox" id="show_sensordata_meta_data" type="checkbox" checked="checked">   -->
+                    <label id="show_label_product_component"> | Product component   </label> <input class="form-control" name="checkbox" id="show_product_component" type="checkbox" checked="checked"> 
+                </div>
+                <div style="display:none;"class="form-group">Node labels
+                    <input class="form-control" name="checkbox" id="show_nodes" type="checkbox" checked="unchecked"> | link labels
+                    <input class="form-control" name="checkbox" id="show_links" type="checkbox" checked="checked">
+                </div>
+            </div>
+        </div>
+        <div style=" z-index: 1000;position: fixed; top: 0px; right: 0px;" >
+                <label style="margin-left: 10px; vertical-align: 50%;">Toggle interaction</label> 
+                <label style="vertical-align: -25%; margin-top: 5px;" class="switch">
+                    <input id="interaction_toggle" type="checkbox">
+                    <span class="slider"></span>
+                  </label>
+                  <button id="settings_toggle" style="padding-top:8px; padding-bottom: 8px;vertical-align: 65%;"onclick="toggle();">Show Info</button>
+                  <script type="text/javascript" src="libs/d3/d3.v3.min.js"></script>
+                </div>
+    <script src="js/graphTestScript.js"></script>
+    <script type="text/javascript" src="libs/d3/d3.v4.min.js"></script>
+    <script type="text/javascript" src="js/sparqlClient.js"></script>
+    <script type="text/javascript" src="js/frontend.js"></script>
+    <script>
+        sparqlClient.call(sparqlClient.transformTypes.GRAPH, graphClient.updateGraph);
+        frontend.handleMessages = callNodeExt;
+    function callNode(id)
+    {
+        if (graphClient.selectedNode) graphClient.selectedNode.style.fill = graphClient.selectedNodeColor;
+        var node  = document.getElementsByClassName("node")[graphClient.nodes[id]];
+        graphClient.selectedNodeColor =  node.style.fill; 
+        node.style.fill = graphClient.selectionColor;
+        graphClient.selectedNode = node;
+        document.getElementById("node_name").innerHTML = id;
+        document.getElementById("node_type").innerHTML =node.__data__.kind;
+        document.getElementById("node_type").style.background = graphClient.nodeColors[node.__data__.kind];
+    }
+    function callNodeExt(id)
+    {
+        if(!document.getElementById("interaction_toggle").checked) return;
+        if (graphClient.selectedNode) graphClient.selectedNode.style.fill = graphClient.selectedNodeColor;
+        var node  = document.getElementsByClassName("node")[graphClient.nodes[id]];
+        graphClient.selectedNodeColor =  node.style.fill; 
+        node.style.fill = graphClient.selectionColor;
+        graphClient.selectedNode = node;
+        document.getElementById("node_name").innerHTML = id;
+        document.getElementById("node_type").innerHTML =node.__data__.kind;
+        document.getElementById("node_type").style.background = graphClient.nodeColors[node.__data__.kind];
+    }
+    function send(id) { frontend.doSend(id,"graphTest"); }
+  </script>
+    <script>var heatmaptype = 'graphView'; </script>
+    <!-- <script type="text/javascript" src="js/heatmap.js"></script> -->
+</body>
+</html>

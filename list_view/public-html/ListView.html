@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="libs/jquery/jquery-3.2.1.min.js" ></script>
+        <script src="libs/bootstrap//bootstrap.min.js"></script>
+        <script src="libs/d3/d3.v3.min.js"></script>
+        <script src="libs/d3/d3.v4.min.js"></script>
+        <script src="js/sparqlClient.js"></script>
+        <script src="js/frontend.js"></script>
+        <script src="libs/d3/d3.v3.min.js"></script>
+        <script src="js/tableClient2.js"></script>
+        <script src="libs/d3/d3.v4.min.js"></script>
+        <script>
+            sparqlClient.call(sparqlClient.transformTypes.TABLE, tableClient.updateData);
+            frontend.handleMessages = tableClient.onMessage;
+        </script>
+        <link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+        <style>
+             /* The switch - the box around the slider */
+                .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+                }
+
+                /* Hide default HTML checkbox */
+                .switch input {display:none;}
+
+                /* The slider */
+                .slider {
+                position: absolute;
+                cursor: pointer;
+                
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: .4s;
+                transition: .4s;
+                }
+
+                .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+                }
+
+                input:checked + .slider {
+                background-color: #2196F3;
+                }
+
+                input:focus + .slider {
+                box-shadow: 0 0 1px #2196F3;
+                }
+
+                input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+                }
+                label {
+                    font-weight: inherit;
+                }
+
+                /* Rounded sliders */
+                .slider.round {
+                border-radius: 34px;
+                }
+
+                .slider.round:before {
+                border-radius: 50%;
+                } 
+        </style>
+    </head>
+    <body>
+        <div class="input-group">
+            <span class="input-group-addon">
+        <label style="width:141px; margin-left:-20px; text-align:center;vertical-align: 100%;">Toggle interaction</label> 
+        <label style="vertical-align: -25%; margin-top: 5px;" class="switch">
+            <input id="interaction_toggle" type="checkbox">
+            <span class="slider"></span>
+        </span> 
+        </label>
+        <span class="input-group-addon" style="min-width:164px;max-width:164px;">Select Shopfloor Type</span>
+        <span class="input-group-addon" style="min-width: 75%"> 
+            <select id="search_selection" class="form-control" onchange="tableClient.update();">
+                <option class="option_kind" >sensor</option> 
+                <!-- selected="selected" -->
+                <option class="option_kind">machine</option>
+                <option class="option_kind">production_line</option>
+                <option class="option_kind">product</option>
+                <option class="option_kind">product_component</option>
+                <option class="option_kind">sensordata</option>
+                <option class="option_kind">sensordata_value</option>
+                <!-- <option>sensor_meta_data</option>
+                    <option>machine_meta_data</option>
+                    <option>product_meta_data</option>
+                    <option>sensordata_meta_data</option>
+                <option>shop-floor(all)</option> -->
+            </select>
+            </span>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" style="min-width:164px;">Filter for
+                <select id="filter_selection" onchange="tableClient.filter_column = this.selectedIndex;">
+                <option class="option_col" >all</option> 
+                </select>
+            </span>
+            <span class="input-group-addon" style="max-width:164px;min-width:164px; text-align:left;">In Selected Type</span>
+                
+            <span class="input-group-addon" style="min-width: 59%"> 
+                <input id="filter" type="text" class="form-control" placeholder="Type here...">
+            </span>
+        </div>
+        
+            <div id="result"></div>
+            <script>var heatmaptype = 'listView'; </script>
+            <!-- <script type="text/javascript" src="js/heatmap.js"></script> -->
+    </body>
+</html>
