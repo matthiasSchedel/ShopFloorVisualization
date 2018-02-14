@@ -1,0 +1,20 @@
+{
+  "name": "context_server",
+  "version": "0.0.0",
+  "description": "context_server",
+  "main": "index.js",
+  "author": {
+    "name": "matthiasSchedel",
+    "email": ""
+  },
+  "dependencies": {
+    "fs": "*",
+    "http": "*",
+    "request": "^0.6.3",
+    "websocket": "^1.0.24",
+    "ws": "^2.0.3"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

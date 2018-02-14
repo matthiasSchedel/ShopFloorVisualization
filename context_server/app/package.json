@@ -1,0 +1,15 @@
+{
+  "name": "contextServer",
+  "version": "0.0.0",
+  "description": "contextServer",
+  "dependencies": {
+    "fs": "*",
+    "http": "*",
+    "request": "*",
+    "websocket": "*",
+    "ws": "*"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
