@@ -1,18 +1,17 @@
 "use strict";
 process.title = "dashboard";
-var webSocketsServerPort = 1337;
 var webSocketServer = require("websocket").server;
 var http = require("http");
 var fs = require('fs');
 var request = require('request');
+
+var webSocketsServerPort = 1337;
 var fileCounter = 0;
-/**
- * Global variables
- */
-// latest 100 messages
-var history = [ ];
-// list of currently connected clients (users)
-var clients = [ ];
+var recordUserData = false;
+var debug = true;
+var history = [ ]; // message history
+var clients = [ ]; // list of currently connected clients(users)
+
 /**
  * Helper function for escaping input strings
  */
@@ -21,7 +20,6 @@ function htmlEntities(str) {
         .replace(/&/g, "&amp;").replace(/</g, "&lt;")
         .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
-
 /**
  * HTTP server
  */
@@ -38,7 +36,6 @@ var wsServer = new webSocketServer({
     // http://tools.ietf.org/html/rfc6455#page-6
     httpServer: server
 });
-
 var download = function(uri, filename, callback){
     var string =  uri;//"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
     var regex = /^data:.+\/(.+);base64,(.*)$/;
@@ -58,17 +55,16 @@ var download = function(uri, filename, callback){
     */
   };
   
-  
 var AppendFile = function(name,content)
 {
     fs.appendFile(name, content, function (err) {
         if (err) throw err;
-        console.log('Saved!');
+        if (debug) console.log('Saved!');
       }); 
 }
 var StoreHeatMap = function(m,name)
 {
-    console.log("Store Heatmap",m,name);
+    if (debug) console.log("Store Heatmap",m,name);
     var obj = {
         time: (new Date()).getTime(),
         img_url: m
@@ -104,7 +100,7 @@ wsServer.on("request", function(request) {
     // we need to know client index to remove them on 'close' event
     var index = clients.push(connection) - 1;
     var userName = "username";
-    console.log((new Date()) + " Connection accepted.");
+    if (debug) console.log((new Date()) + " Connection accepted.");
     if (history.length > 0) {
         connection.sendUTF(
             JSON.stringify({ type: "history", data: history} ));
@@ -130,22 +126,15 @@ wsServer.on("request", function(request) {
             var type =  message.utf8Data.split("@")[0];
             message =  message.utf8Data.split("@")[1];
             
-
             if (type == 'screenshot') 
             {
-                StoreScreenShot(message);
+                if (recordUserData) StoreScreenShot(message);
                 return;
             } else if (type == 'heatmap')
             {
-                StoreHeatMap(message,userName_);
+                if (recordUserData) StoreHeatMap(message,userName_);
                 return;
             } 
-
-            
-            
-
-
-
         }
         console.log("message from",userName);
         var obj = {
@@ -153,12 +142,11 @@ wsServer.on("request", function(request) {
             text: htmlEntities(message),
             author: userName
         };
-        
         //fs.appendFileSync('History.txt',obj.toString());
          var line = obj.time.toString()+";" + obj.author.toString() + ";" + obj.text.toString() + ";\r\n";
-        fs.appendFile('AppEventHistory.csv', line, function (err) {
+         if (recordUserData) fs.appendFile('AppEventHistory.csv', line, function (err) {
             if (err) throw err;
-            console.log('Saved!');
+            if (debug) console.log('Saved!');
           }); 
         history.push(obj);
         var json2 = JSON.stringify({ type:"message", data: message ,author:userName});
