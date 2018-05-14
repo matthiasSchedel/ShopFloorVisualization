@@ -2,25 +2,17 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Shop-floor dashboard</title>
+		<title>Shop-floor Dashboard</title>
 		<link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" />
-		<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 		<script src="js/jquery-1.6.2.min.js"></script>
 		<script src="js/jquery-ui-1.8.16.custom.min.js"></script>
 		<link href="css/style.css" rel="stylesheet" type="text/css" >
 		<script type="text/javascript" src="js/ui.js"></script>
 	</head>
 	<body>
-
 		<script>
-
-					//129.13.169.143
-					var base_url = "http://0.0.0.0";	
-			//var base = "http://129.13.169.143";
-			//var base = "http://129.13.7.131";
-			// var base = "http://129.13.169.157";
+			var base_url = "http://0.0.0.0";	
 			// var base_url = base;//+ ":5900";
-			
 			var dashboard = {
 				windows:[],
 				graph_visualizer : {
@@ -43,9 +35,6 @@
 					url:base_url +":8070/websockets/notePad.html"
 				}
 			}
-
-
-			
 			dashboard.createMyWindow = function (visualizer) {
 							var div_count = $('.dialog_window').length + 1;
 							var div_id = 'dialog_window_' + div_count;
@@ -62,7 +51,6 @@
 								buttons: buttons
 							});
 						};
-
 			// $(document).ready(function () {
 			// 	$('#dialog_window_1').dialog({
 			// 		width: 'auto',
@@ -80,12 +68,8 @@
 				dashboard.windows.forEach(function(el){
 					var iframe = document.getElementById(el+'_iframe');
 					var window =  document.getElementById(el);
-
-					//console.log("style width", window.style.width)//;.split(";")[0].split(":")[1]).substring(1,this.length);
 					var width = document.getElementById(el).width || document.getElementById(el).style.width || 500.0;
 					var height = document.getElementById(el).height || document.getElementById(el).style.height || 500.0;
-
-					
 					document.getElementById(el+'_iframe').width =  width;
 					document.getElementById(el+'_iframe').height =  height;
 					//currentRow.setAttribute("style","background:" + "#039BE5")
@@ -101,14 +85,12 @@
 		}
 		</script>
 		<script src="js/nav.js" type="text/javascript"></script>
-	
-
 			<div id="mySidenav" class="sidenav">
 					<!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
 					<a href="#" ><img id="scaleit_logo" src="./images/scaleit_logo_small.png" alt="ScaleIT" width="55" style="border-radius: 50%;" /></a>
 					<a href="#" onclick="dashboard.createMyWindow(dashboard.graph_visualizer);">Graph</a>
 					<a href="#" onclick="dashboard.createMyWindow(dashboard.table_visualizer);">List</a>
-					<a href="#" onclick="dashboard.createMyWindow(dashboard.model_visualizer);">3D</a>
+					<!-- <a href="#" onclick="dashboard.createMyWindow(dashboard.model_visualizer);">3D</a> -->
 					<a href="#" onclick="dashboard.createMyWindow(dashboard.tree_visualizer);">Tree</a>
 					<a href="#" onclick="dashboard.createMyWindow(dashboard.note_app);">Notes</a>
 					<!-- <a href="https://docs.google.com/forms/d/1fXndSmfncZFKb3CNB7va_EQZ_0X5QEkcONPrw5tFY90"> Studie</a> -->
