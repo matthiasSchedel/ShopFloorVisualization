@@ -124,7 +124,7 @@
                   <button id="settings_toggle" style="padding-top:8px; padding-bottom: 8px;vertical-align: 65%;"onclick="toggle();">Show Info</button>
                   <script type="text/javascript" src="libs/d3/d3.v3.min.js"></script>
                 </div>
-    <script type="text/javascript" src="js/graphTestScript.js"></script>
+    <script type="text/javascript" src="js/graphClient.js"></script>
     <script type="text/javascript" src="libs/d3/d3.v4.min.js"></script>
     <script type="text/javascript" src="js/sparqlClient.js"></script>
     <script type="text/javascript" src="js/frontend.js"></script>
@@ -147,7 +147,7 @@
         var node  = document.getElementsByClassName("node")[graphClient.nodes[id]];
         graphClient.selectedNodeColor =  node.style.fill; 
         // node.setAttribute('class','node.selected');
-        console.log('node',node)
+        //console.log('node',node)
         node.style.stroke = graphClient.selectionColor;
         node.setAttribute('class','node selected')
         graphClient.selectedNode = node;
