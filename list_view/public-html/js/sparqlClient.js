@@ -12,9 +12,7 @@ var sparqlClient = {
   query: null,
   query_url:"http://0.0.0.0:3030/shopfloor/"
 };
-//query_url:"http://0.0.0.0:3030/shopfloor"
-//query_url:"http://129.13.169.143:3030/shopfloor/"
-// query_url:"http://192.168.0.234:3030/shopfloor/"
+
 //Enum of transformTypes
 sparqlClient.transformTypes = Object.freeze({
   GRAPH: 0,

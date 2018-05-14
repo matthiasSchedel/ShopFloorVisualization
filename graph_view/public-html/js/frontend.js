@@ -5,8 +5,6 @@ var frontend = {
     handleMessages:null,
     socket_url:"ws://0.0.0.0:1337"
 };
- //socket_url:"ws://192.168.0.234:1337"
- //socket_url:"ws://129.13.169.143:1337"
 "use strict";
 window.WebSocket = window.WebSocket || window.MozWebSocket;
 if (!window.WebSocket) {
