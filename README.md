@@ -11,3 +11,4 @@
 
 ## Known bugs:
 * App view windows resize to 50% of their initial width. This has to adjusted manually at the moment.
+* Safari Browser currently not supported(Chrome and Firefox have been tested successfully).
