@@ -31,6 +31,16 @@ services:
     volumes: 
     - ./tree_view/public-html:/usr/local/apache2/htdocs/
     - ./tree_view/logs:/usr/local/apache2/logs   
+  # model_view:
+  #  build: ./3D_view
+  #   labels:
+  #   - "com.example.description=The 3d visualizer"
+  #   - "com.example.name=3d_view" 
+  #   ports:
+  #   - "8080:80"
+  #   volumes: 
+  #   - ./3D_view/public-html:/usr/local/apache2/htdocs/
+  #   - ./3D_view/logs:/usr/local/apache2/logs  
   dashboard:
     build: ./dashboard
     labels:
