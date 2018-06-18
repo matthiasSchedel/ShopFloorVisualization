@@ -6,7 +6,9 @@
 ## How to use this tool:
 1. Clone this repository
 2. Navigate to the repository
-3. Use the '$docker-compose up' command line command in the current directory to start the tool.
+3. Use the 
+```$docker-compose up``` 
+command line command in the current directory to start the tool.
 4. You can now access the dashboard of the ShopFloorVisualization tool under the following URL [http://0.0.0.0:8010](http://0.0.0.0:8010).
 
 ## Known bugs:
