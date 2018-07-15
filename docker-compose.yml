@@ -9,7 +9,11 @@ services:
     - "8060:80"
     volumes: 
     - ./graph_view/public-html:/usr/local/apache2/htdocs/
-    - ./graph_view/logs:/usr/local/apache2/logs   
+    - ./graph_view/logs:/usr/local/apache2/logs
+    - ./ServiceModules/js/frontend.js:/usr/local/apache2/htdocs/js/frontend.js
+    - ./ServiceModules/js/sparqlClient.js:/usr/local/apache2/htdocs/js/sparqlClient.js
+    depends_on:
+      - context_server
   dashboard:
   list_view:
     build: ./list_view
@@ -20,7 +24,11 @@ services:
     - "8050:80"
     volumes: 
     - ./list_view/public-html:/usr/local/apache2/htdocs/
-    - ./list_view/logs:/usr/local/apache2/logs   
+    - ./list_view/logs:/usr/local/apache2/logs
+    - ./ServiceModules/js/frontend.js:/usr/local/apache2/htdocs/js/frontend.js
+    - ./ServiceModules/js/sparqlClient.js:/usr/local/apache2/htdocs/js/sparqlClient.js
+    depends_on:
+      - context_server
   tree_view:
     build: ./tree_view
     labels:
@@ -30,7 +38,11 @@ services:
     - "8070:80"
     volumes: 
     - ./tree_view/public-html:/usr/local/apache2/htdocs/
-    - ./tree_view/logs:/usr/local/apache2/logs   
+    - ./tree_view/logs:/usr/local/apache2/logs
+    - ./ServiceModules/js/frontend.js:/usr/local/apache2/htdocs/js/frontend.js
+    - ./ServiceModules/js/sparqlClient.js:/usr/local/apache2/htdocs/js/sparqlClient.js
+    depends_on:
+      - context_server
   # model_view:
   #  build: ./3D_view
   #   labels:
@@ -40,7 +52,9 @@ services:
   #   - "8080:80"
   #   volumes: 
   #   - ./3D_view/public-html:/usr/local/apache2/htdocs/
-  #   - ./3D_view/logs:/usr/local/apache2/logs  
+  #   - ./3D_view/logs:/usr/local/apache2/logs
+  #   - ./ServiceModules/js/frontend.js:/usr/local/apache2/htdocs/js/frontend.js
+  #   - ./ServiceModules/js/sparqlClient.js:/usr/local/apache2/htdocs/js/sparqlClient.js
   dashboard:
     build: ./dashboard
     labels:
